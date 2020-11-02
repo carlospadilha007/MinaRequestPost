@@ -1,4 +1,4 @@
-package cursoandroid.mapas.post;
+    package cursoandroid.mapas.post;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import cursoandroid.mapas.post.api_retrofit.NetworkHandler;
 import cursoandroid.mapas.post.api_retrofit.interfaces.DataService;
 import cursoandroid.mapas.post.api_retrofit.model.Localizacao;
 import retrofit2.Call;
@@ -34,15 +35,15 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private String baseUrl;
     private List<Localizacao> localizacoes = new ArrayList<>();
-    private Localizacao userLocation = new Localizacao( 100,-20.7086162567, -46.6276283264);
+    private Localizacao userLocation = new Localizacao( 97,-20.7070598602, -46.6250877380);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        baseUrl = "http://10.0.2.2:3333/";
+        baseUrl = "https://localhost:3333/";
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://192.168.14.105:3333/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buscarLocalizacao(){
-        DataService service = retrofit.create(DataService.class);
+
+        DataService service = NetworkHandler.getRetrofit().create(DataService.class);
         Call<List<Localizacao>> call = service.buscarLocalizacao(userLocation);
         call.enqueue(new Callback<List<Localizacao>>() {
             @Override
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Localizacao>> call, Throwable t) {
-                Log.d("retorno", "resultado " + t.getMessage());
+                Log.d("retorno", "erro-> " + t.getMessage());
             }
         });
     }
