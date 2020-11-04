@@ -2,24 +2,14 @@
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import cursoandroid.mapas.post.api_retrofit.NetworkHandler;
 import cursoandroid.mapas.post.api_retrofit.interfaces.DataService;
 import cursoandroid.mapas.post.api_retrofit.model.Localizacao;
 import retrofit2.Call;
@@ -54,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void buscarLocalizacao(){
 
-        DataService service = NetworkHandler.getRetrofit().create(DataService.class);
+        DataService service = retrofit.create(DataService.class);
         Call<List<Localizacao>> call = service.buscarLocalizacao(userLocation);
         call.enqueue(new Callback<List<Localizacao>>() {
             @Override
@@ -75,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
 
