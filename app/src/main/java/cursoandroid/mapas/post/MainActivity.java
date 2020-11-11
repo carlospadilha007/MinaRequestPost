@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private String baseUrl;
     private List<Localizacao> localizacoes = new ArrayList<>();
-    private Localizacao userLocation = new Localizacao( 97,-20.7070598602, -46.6250877380);
+    private Localizacao userLocation = new Localizacao( 4,-20.7170429230, -46.6259422302);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        baseUrl = "https://localhost:3333/";
+        baseUrl = "http://localhost:3333/locations/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
